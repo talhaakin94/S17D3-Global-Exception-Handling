@@ -32,14 +32,14 @@ public class KangarooController {
     @PostMapping("/kangaroos")
     public Kangaroo addKangaroo(@RequestBody Kangaroo kangaroo) {
         if(kangaroo.getId() <= 0) {
-            throw new ZooException("invalid kangroo", HttpStatus.BAD_REQUEST);
+            throw new ZooException("invalid kangroo id " + kangaroo.getId(), HttpStatus.BAD_REQUEST);
         }
         kangaroos.put(kangaroo.getId(), kangaroo);
         return kangaroo;
     }
     @PutMapping("/kangaroos/{id}")
     public Kangaroo updateKangaroo(@PathVariable int id, @RequestBody Kangaroo kangaroo) {
-        if(kangaroos.get(id) == null || id <= 0) {
+        if(id <= 0 || !kangaroos.containsKey(id)) {
             throw new ZooException("invalid id" + id, HttpStatus.NOT_FOUND);
         }
         kangaroos.put(id, kangaroo);
@@ -47,8 +47,8 @@ public class KangarooController {
     }
     @DeleteMapping("/kangaroos/{id}")
     public Kangaroo deleteKangaroo(@PathVariable int id) {
-        if(kangaroos.get(id) == null || id <= 0) {
-            throw new ZooException("invalid id" + id, HttpStatus.NOT_FOUND);
+        if(id <= 0 || !kangaroos.containsKey(id)) {
+            throw new ZooException("invalid id " + id, HttpStatus.NOT_FOUND);
         }
         return kangaroos.remove(id);
     }

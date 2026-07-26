@@ -33,25 +33,24 @@ public class KoalaController {
     @PostMapping("/koalas")
     public Koala addKoala(@RequestBody Koala koala) {
         if(koala.getId() <= 0) {
-            throw new ZooException("invalid koala", HttpStatus.BAD_REQUEST);
+            throw new ZooException("invalid koala id " + koala.getId(), HttpStatus.BAD_REQUEST);
         }
         koalas.put(koala.getId(), koala);
         return koala;
     }
     @PutMapping("/koalas/{id}")
     public Koala updateKoala(@PathVariable int id, @RequestBody Koala koala) {
-        if(koalas.get(id) == null || id <= 0) {
-            throw new ZooException("invalid id" + id, HttpStatus.NOT_FOUND);
+        if(id <= 0 || !koalas.containsKey(id)) {
+            throw new ZooException("invalid koala id " + koala.getId(), HttpStatus.BAD_REQUEST);
         }
         koalas.put(id, koala);
         return koala;
     }
     @DeleteMapping("/koalas/{id}")
     public Koala deleteKoala(@PathVariable int id) {
-        if(koalas.get(id) == null || id <= 0) {
-            throw new ZooException("invalid id" + id, HttpStatus.NOT_FOUND);
+        if(id <= 0 || !koalas.containsKey(id)) {
+            throw new ZooException("invalid id " + id, HttpStatus.NOT_FOUND);
         }
-
         return koalas.remove(id);
     }
 }
