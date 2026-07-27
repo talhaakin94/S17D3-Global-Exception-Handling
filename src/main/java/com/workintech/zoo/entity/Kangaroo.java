@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Kangaroo {
-    int id;
-    String name;
-    double height;
-    double weight;
-    String gender;
-    boolean isAggressive;
+    private int id;
+    private String name;
+    private double height;
+    private double weight;
+    private String gender;
+    private boolean isAggressive;
     public boolean getIsAggressive() {
         return isAggressive;
     }
